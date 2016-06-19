@@ -1,0 +1,78 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Big Text Display</title>
+		<script>
+		    var title;
+		    var textarea;
+		    
+		    for(var i = -10; i <= 10; i++)
+		    {
+		        console.log(!!(i));
+		    }
+		    
+		    window.addEventListener("load", onLoad, false);
+		    function onLoad() {
+		        title = document.getElementsByTagName("title")[0];
+		        textarea = document.getElementsByClassName("bigtext")[0];
+		        loop();
+		    }
+		    function loop() {
+		        if(/\S/.test(textarea.value)) {
+		            document.title = textarea.value;
+		        }
+		        else {
+		            document.title = "Big Text Display";
+		        }
+		        setTimeout(loop, 20)
+		    }
+		</script>
+	</head>
+	<body>
+		<style>
+			body {
+			    display: block;
+			    position: absolute;
+			    box-sizing: border-box;
+			    background: #fff;
+				margin: 0;
+				padding: 0;
+				height: 100%;
+				width: 100%;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+			}
+			.bigtext-container {
+			    display: block;
+			    position: relative;
+			    box-sizing: border-box;
+			    width: 100%;
+			    height: 100%;
+			    margin: 0;
+				padding: 0;
+			}
+			.bigtext {
+			    display: block;
+			    position: relative;
+			    box-sizing: border-box;
+			    resize: none;
+				margin: 0;
+			    padding: 20px;
+				width: 100% !important;
+				height: 100% !important;
+				background: #fff;
+				border: 0px #fff solid;
+				font-family: Arial, sans-serif;
+				font-size: 5em;
+			}
+			.bigtext:focus {
+			    outline: 0;
+			}
+		</style>
+		<div class="bigtext-container">
+		    <textarea class="bigtext"></textarea>
+		</div>
+	</body>
+</html>
