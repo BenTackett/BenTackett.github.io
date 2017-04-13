@@ -128,6 +128,9 @@ The following options are supported:\n\
                     else {
                         document.title = "Notepad";
                     }
+                    if(textarea.value == "") {
+                        textarea.value = "\n";
+                    }
                     window.localStorage.setItem("text", textarea.value);
                     value = textarea.value;
                 }
