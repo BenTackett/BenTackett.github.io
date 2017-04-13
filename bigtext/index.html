@@ -77,7 +77,7 @@ The following options are supported:\n\
                 var optionsArray;
                 var hash = document.location.hash;
                 if(hash.length > 1) {
-                    textarea.value = hash.slice(1).replace("%20", " ");
+                    textarea.value = hash.slice(1).replace(/%20/g, " ");
                     saveOptions = false;
                     doloop = false;
                 }
@@ -134,7 +134,7 @@ The following options are supported:\n\
                     else if(e.keyCode == 83 && e.altKey) {
                         e.preventDefault(); //prevent default whatever
                         
-                        document.location.hash = textarea.value.replace(" ", "%20");
+                        document.location.hash = textarea.value.replace(/\s/g, "%20");
                         doloop = false //dont save
                     }
                 });
