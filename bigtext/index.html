@@ -62,6 +62,12 @@ The following options are supported:\n\
                 textarea = document.getElementById("main");
                 var savedText = window.localStorage.getItem("text");
                 textarea.value = (savedText == null || savedText == undefined) ? defaultString : savedText;
+                if(savedText == null || savedText == undefined) {
+                    window.localStorage.setItem("text", "");
+                }
+                if(window.localStorage.getItem("options"); == null || window.localStorage.getItem("options"); == undefined) {
+                    window.localStorage.setItem("options", "default");
+                }
                 
                 //get and apply options as css classes
                 var query = document.location.search;
