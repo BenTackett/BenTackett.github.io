@@ -10,7 +10,7 @@
             var textarea;
             var value;
             var doloop = true;
-            var saveoptions = false;
+            var saveOptions = true;
             
             var defaultString = "type text here\n\ngo to /bigtext/?help for help and options.";
             var helpString = "  Help and Options\n\
@@ -78,7 +78,7 @@ The following options are supported:\n\
                 var hash = document.location.hash;
                 if(hash.length > 1) {
                     textarea.value = hash.slice(1).replace("%20", " ");
-                    saveoptions = false;
+                    saveOptions = false;
                     doloop = false;
                 }
                 
@@ -98,7 +98,7 @@ The following options are supported:\n\
                     if(query.length > 1) {
                         var options = query.slice(1); //remove ? at beginning
                         optionsArray = options.split(/[\,\&]{1}/);
-                        if(saveoptions) {
+                        if(saveOptions) {
                             window.localStorage.setItem("options", optionsArray);
                         }
                     } else {
