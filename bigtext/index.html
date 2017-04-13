@@ -20,6 +20,8 @@ Text will be saved.\n\
 \n\
 press ctrl-S to save to a text file.\n\
 \n\
+press alt-S to get a sharable URL.\n\
+\n\
 To set options, set the ? in the url to ?option1,option2,... with option1, option2, etc. being replaced with the option you want.\n\
 \n\
 Example: ?comic,pink,rave\n\
@@ -107,6 +109,12 @@ The following options are supported:\n\
                     document.location.href = document.location.href + "?";
                 }
                 
+                //if there is a hash, apply the text and don't save it
+                var hash = document.location.hash;
+                if(hash.length > 1) {
+                    textarea.value = hash.slice(1).replace("%20", " ");
+                }
+                
                 document.addEventListener("keydown", function(e) {
                     //ctrl s
                     if(e.keyCode == 83 && e.ctrlKey) {
@@ -118,6 +126,12 @@ The following options are supported:\n\
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
+                    }
+                    //alt s
+                    else if(e.keyCode == 83 && e.altKey) {
+                        e.preventDefault(); //prevent default document saving
+                        
+                        document.location.hash = textarea.value.replace(" ", "%20");
                     }
                 });
                 
