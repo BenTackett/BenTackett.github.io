@@ -10,6 +10,7 @@
             var textarea;
             var value;
             var doloop = true;
+            var saveoptions = false;
             
             var defaultString = "type text here\n\ngo to /bigtext/?help for help and options.";
             var helpString = "  Help and Options\n\
@@ -74,6 +75,11 @@ The following options are supported:\n\
                 //get and apply options as css classes
                 var query = document.location.search;
                 var optionsArray;
+                var hash = document.location.hash;
+                if(hash.length > 1) {
+                    textarea.value = hash.slice(1).replace("%20", " ");
+                    saveoptions = false;
+                }
                 
                 //help mode initializes if the first option is help
                 if(/^\?help/.test(query)) {
@@ -91,7 +97,9 @@ The following options are supported:\n\
                     if(query.length > 1) {
                         var options = query.slice(1); //remove ? at beginning
                         optionsArray = options.split(/[\,\&]{1}/);
-                        window.localStorage.setItem("options", optionsArray);
+                        if(saveoptions) {
+                            window.localStorage.setItem("options", optionsArray);
+                        }
                     } else {
                         var options = window.localStorage.getItem("options");
                         optionsArray = options.split(/[\,\&]{1}/);
@@ -109,12 +117,6 @@ The following options are supported:\n\
                     document.location.href = document.location.href + "?";
                 }
                 
-                //if there is a hash, apply the text and don't save it
-                var hash = document.location.hash;
-                if(hash.length > 1) {
-                    textarea.value = hash.slice(1).replace("%20", " ");
-                }
-                
                 document.addEventListener("keydown", function(e) {
                     //ctrl s
                     if(e.keyCode == 83 && e.ctrlKey) {
@@ -129,9 +131,10 @@ The following options are supported:\n\
                     }
                     //alt s
                     else if(e.keyCode == 83 && e.altKey) {
-                        e.preventDefault(); //prevent default document saving
+                        e.preventDefault(); //prevent default whatever
                         
                         document.location.hash = textarea.value.replace(" ", "%20");
+                        doloop = false //dont save
                     }
                 });
                 
