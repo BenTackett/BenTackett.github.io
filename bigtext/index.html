@@ -1,78 +1,119 @@
 <!doctype HTML>
 <html>
-	<head>
-		<title>Big Text Display</title>
-		<script>
-		    var title;
-		    var textarea;
-		    
-		    for(var i = -10; i <= 10; i++)
-		    {
-		        console.log(!!(i));
-		    }
-		    
-		    window.addEventListener("load", onLoad, false);
-		    function onLoad() {
-		        title = document.getElementsByTagName("title")[0];
-		        textarea = document.getElementsByClassName("bigtext")[0];
-		        loop();
-		    }
-		    function loop() {
-		        if(/\S/.test(textarea.value)) {
-		            document.title = textarea.value;
-		        }
-		        else {
-		            document.title = "Big Text Display";
-		        }
-		        setTimeout(loop, 20)
-		    }
-		</script>
-	</head>
-	<body>
-		<style>
-			body {
-			    display: block;
-			    position: absolute;
-			    box-sizing: border-box;
-			    background: #fff;
-				margin: 0;
-				padding: 0;
-				height: 100%;
-				width: 100%;
-				left: 0;
-				right: 0;
-				top: 0;
-				bottom: 0;
-			}
-			.bigtext-container {
-			    display: block;
-			    position: relative;
-			    box-sizing: border-box;
-			    width: 100%;
-			    height: 100%;
-			    margin: 0;
-				padding: 0;
-			}
-			.bigtext {
-			    display: block;
-			    position: relative;
-			    box-sizing: border-box;
-			    resize: none;
-				margin: 0;
-			    padding: 20px;
-				width: 100% !important;
-				height: 100% !important;
-				background: #fff;
-				border: 0px #fff solid;
-				font-family: Arial, sans-serif;
-				font-size: 5em;
-			}
-			.bigtext:focus {
-			    outline: 0;
-			}
-		</style>
-		<div class="bigtext-container">
-		    <textarea class="bigtext"></textarea>
-		</div>
-	</body>
+    <head>
+        <title>Notepad</title>
+        <meta name="author" content="me">
+        <meta charset="unicode">
+        
+        <script>
+            var title;
+            var textarea;
+            var value;
+            
+            window.addEventListener("load", onLoad, false);
+            function onLoad() {
+                title = document.getElementsByTagName("title")[0];
+                textarea = document.getElementById("main");
+                textarea.value = window.localStorage.getItem("text");
+                
+                var query = document.location.search;
+                var optionsArray;
+                if(query.length > 0) {
+                    var options = query.slice(1); //remove ? at beginning
+                    optionsArray = options.split(/[\,\&]{1}/);
+                    window.localStorage.setItem("options", optionsArray);
+                } else {
+                    var options = window.localStorage.getItem("options");
+                    optionsArray = options.split(/[\,\&]{1}/);
+                }
+                optionsArray = optionsArray || []; //null/undefined check
+                for(var i = 0; i < optionsArray.length; i++) {
+                    var option = optionsArray[i];
+                    console.log(option);
+                    document.body.classList.add(option);
+                }
+                
+                loop();
+            }
+            function loop() {
+                if(textarea.value != value) {
+                    //if its not just whitespace
+                    if (/\S/.test(textarea.value)) {
+                        document.title = textarea.value;
+                    }
+                    else {
+                        document.title = "Notepad";
+                    }
+                    window.localStorage.setItem("text", textarea.value);
+                    value = textarea.value;
+                }
+                setTimeout(loop, 50);
+            }
+        </script>
+        <style>
+            :root, html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                font-family: "Arial", sans-serif;
+                font-size: 4em;
+            }
+            /* font family options */
+            body.sans {
+                font-family: "Arial", sans-serif;
+            }
+            body.serif {
+                font-family: serif;
+            }
+            body.comic {
+                font-family: "Comic Sans MS", fantasy;
+            }
+            body.mono {
+                font-family: monospace;
+            }
+            /* color options */
+            body.rave {
+                text-shadow: 2px 2px #ff0000,
+                             2px -2px #ffff00,
+                             -2px -2px #00ff00,
+                             -2px 2px #0000ff;
+                color: #ffffff;
+            }
+            body.black {
+                background: #000000;
+                color: #ffffff;
+            }
+            /* font size options */
+            body.big {
+                font-size: 4em;
+            }
+            body.medium {
+                font-size: 2em;
+            }
+            body.small {
+                font-size: 1em;
+            }
+            #main {
+                width: 100%;
+                height: 100%;
+                resize: none;
+                padding: 2rem;
+                border: 0;
+                outline: 0;
+                font: inherit;
+                color: inherit;
+                text-shadow: inherit;
+                overflow: auto;
+                background: inherit;
+                box-sizing: border-box;
+                vertical-align: bottom;
+            }
+        </style>
+    </head>
+    <body class="">
+        <textarea id="main"></textarea>
+    </body>
 </html>
