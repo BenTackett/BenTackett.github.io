@@ -135,7 +135,11 @@ The following options are supported:\n\
                         e.preventDefault(); //prevent default whatever
                         
                         document.location.hash = textarea.value.replace(/\s/g, "%20");
-                        doloop = false //dont save
+                    }
+                    //alt g
+                    else if(e.keyCode == 71 && e.altKey) {
+                        e.preventDefault(); //prevent default whatever
+                        textarea.value = textarea.value.split("").map(function(c) {return c.toUpperCase()}).join(" ");
                     }
                 });
                 
